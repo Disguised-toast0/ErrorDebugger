@@ -1,0 +1,55 @@
+{
+  "errorId": "ERR_302",
+  "name": "302 Redirect Loop / URL Not Followed",
+  "startNode": "n1",
+  "nodes": {
+    "n1": {
+      "question": "Is the redirect reproducible in a normal browser?",
+      "branches": {
+        "YES": {
+          "next": "n2"
+        },
+        "NO": {
+          "resolution": "r1"
+        }
+      }
+    },
+    "n2": {
+      "question": "Does the redirect depend on cookies or session?",
+      "branches": {
+        "YES": {
+          "resolution": "r2"
+        },
+        "NO": {
+          "resolution": "r3"
+        }
+      }
+    }
+  },
+  "resolutions": {
+    "r1": {
+      "title": "Crawler-Specific Redirect",
+      "steps": [
+        "Inspect request headers",
+        "Compare browser vs crawler request",
+        "Fix missing headers"
+      ]
+    },
+    "r2": {
+      "title": "Session / Cookie Redirect Loop",
+      "steps": [
+        "Persist cookies",
+        "Accept cookie banner",
+        "Reuse browser context"
+      ]
+    },
+    "r3": {
+      "title": "Hard Redirect Loop",
+      "steps": [
+        "Manually follow redirect chain",
+        "Cap redirect depth",
+        "Fix final target URL"
+      ]
+    }
+  }
+}

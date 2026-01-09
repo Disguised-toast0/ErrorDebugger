@@ -1,0 +1,45 @@
+{
+  "errorId": "ERR_503",
+  "name": "503 Upstream Error",
+  "startNode": "n1",
+  "nodes": {
+    "n1": {
+      "question": "Is the site accessible locally?",
+      "branches": {
+        "YES": { "next": "n2" },
+        "NO": { "resolution": "r1" }
+      }
+    },
+    "n2": {
+      "question": "Is bot protection detected?",
+      "branches": {
+        "YES": { "resolution": "r2" },
+        "NO": { "resolution": "r3" }
+      }
+    }
+  },
+  "resolutions": {
+    "r1": {
+      "title": "Site Down or Network Issue",
+      "steps": [
+        "Check DNS resolution",
+        "Verify upstream service status"
+      ]
+    },
+    "r2": {
+      "title": "Bot Protection Blocking Requests",
+      "steps": [
+        "Rotate User-Agent",
+        "Enable stealth mode",
+        "Add request delays"
+      ]
+    },
+    "r3": {
+      "title": "Unknown Upstream Issue",
+      "steps": [
+        "Capture HAR logs",
+        "Escalate to infra team"
+      ]
+    }
+  }
+}

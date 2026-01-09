@@ -1,0 +1,55 @@
+{
+  "errorId": "ERR_504",
+  "name": "504 Gateway Timeout / Traffic Block",
+  "startNode": "n1",
+  "nodes": {
+    "n1": {
+      "question": "Does the request timeout consistently?",
+      "branches": {
+        "YES": {
+          "next": "n2"
+        },
+        "NO": {
+          "resolution": "r1"
+        }
+      }
+    },
+    "n2": {
+      "question": "Does the site use Cloudflare or similar protection?",
+      "branches": {
+        "YES": {
+          "resolution": "r2"
+        },
+        "NO": {
+          "resolution": "r3"
+        }
+      }
+    }
+  },
+  "resolutions": {
+    "r1": {
+      "title": "Transient Network Issue",
+      "steps": [
+        "Retry request",
+        "Increase timeout",
+        "Log response time"
+      ]
+    },
+    "r2": {
+      "title": "Traffic / Rate Limiting Block",
+      "steps": [
+        "Reduce request frequency",
+        "Rotate IP",
+        "Add delays"
+      ]
+    },
+    "r3": {
+      "title": "Backend Slowness",
+      "steps": [
+        "Capture response timings",
+        "Retry with lower concurrency",
+        "Escalate to site owner"
+      ]
+    }
+  }
+}
